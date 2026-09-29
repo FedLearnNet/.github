@@ -13,30 +13,12 @@ train machine-learning models while retaining control over their local data.
 
 ## FL-Net Architecture
 
-FL-Net follows a distributed architecture consisting of a central
+FL-Net follows a star shaped network architecture consisting of a central
 **Platform** and independently operated **Sites**.
 
-- **Platform** – coordinates federated projects, workflows, and analyses.
-- **Sites** – retain institutional data and execute computations locally.
-- **Federated Learning** – combines locally computed model updates without
-  transferring raw data.
-- **Distributed Data Queries** – enable privacy-preserving feasibility
-  analyses across participating Sites.
-- **Tools** – containerized analysis applications executed within the
-  federated infrastructure.
-
----
-
-## Main Repositories
-
-| Repository | Purpose |
-|---|---|
-| [Frontends](https://github.com/FedLearnNet/Frontends) | Global and local FL-Net web interfaces |
-| [Orchestration-API](https://github.com/FedLearnNet/Orchestration-API) | Orchestration of tools and federated workflows |
-| [Learning-APIs](https://github.com/FedLearnNet/Learning-APIs) | Global and local federated-learning services |
-| [Python-Tool-API](https://github.com/FedLearnNet/Python-Tool-API) | Python API for implementing FL-Net tools |
-| [Tool-Build-Pipeline](https://github.com/FedLearnNet/Tool-Build-Pipeline) | Build and validation pipeline for FL-Net tools |
-| [FL-Net-Client-Deployment](https://github.com/FedLearnNet/FL-Net-Client-Deployment) | Deployment utilities for FL-Net Sites |
+- **Platform** – coordinates data discovery queries, federated statistics and federated learning projects
+- **Sites** – retain institutional data and execute computations locally. Allows complex extract transfer load (ETL) data importing and tight permission based control of federated access.
+📖 [Architecture Documentation](https://federated-learning.net/documentation/docs/intro/architecture/welcome)
 
 ---
 
@@ -61,6 +43,8 @@ available at:
 
 **https://federated-learning.net/**
 
+This is a protected instance, please [contact us](mailto:info@mail.federated-learning.net) for account creation.
+
 ---
 
 ## Documentation
@@ -76,6 +60,7 @@ federated workflows, and administration is available in the
 FL-Net is developed as an open-source project. Contributions, bug reports,
 feature requests, and discussions are welcome through the corresponding
 GitHub repositories.
+Please mind our [contribution guide](https://federated-learning.net/documentation/docs/contribution-guide/welcome)
 
 ---
 
