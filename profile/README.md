@@ -18,6 +18,7 @@ FL-Net follows a star shaped network architecture consisting of a central
 
 - **Platform** – coordinates data discovery queries, federated statistics and federated learning projects
 - **Sites** – retain institutional data and execute computations locally. Allows complex extract transfer load (ETL) data importing and tight permission based control of federated access.
+
 📖 [Architecture Documentation](https://federated-learning.net/documentation/docs/intro/architecture/welcome)
 
 ---
