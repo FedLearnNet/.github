@@ -69,3 +69,20 @@ Please mind our [contribution guide](https://federated-learning.net/documentatio
 For questions about FL-Net:
 
 📧 info@mail.federated-learning.net
+
+## Citing FL-Net and References
+You can find the academic paper describing FL-Net [on arxiv](https://arxiv.org/abs/2609.20650)
+
+If you use the FL-Net software or the deployed instance (federated-learning.net), please cite the preprint of FL-Net:
+```
+@misc{süwer2026multicentermedicaldatamining,
+      title={Multi-center Medical Data Mining with FL-Net - A One-stop Shop for Federated Learning}, 
+      author={Simon Süwer and Julian Klemm and Elisa Acitelli and Mathieu Almeida and Lucia Altucci and Zsolt Bagyura and Michelangela Barbieri and Zsolt-Zoltán Bedő and Rosaria Benedetti and Béla Bihari and Csongor Csalóka and Lucia Dicunta and Stanislav Ehrlich and Bjoern M. Eskofier and Sándor-József Fejér and Georg Fröwis and Walter Hötzendorfer and Alexandra Kautzky-Willer and Jens Johann Georg Lohmann and Marianna Maranghi and Lorenzo Marconi and Rudolf Mayer and Wouter Leonard Megchelenbrink and Monika Moga and Adham Mottalib and Sanjeev Mehta and Madeleine Müller and Thomas Nyström and Balázs-Attila Orbán and Paul O'Toole and Giuseppe Paolisso and Paolo Parini and Matteo Pedrelli and Enrico Petrillo and Philipp Poindl and Niklas Probul and Anastasia Pustozerova and Tanja Šarčević and Lukas Weilguny and Jan Baumbach and Andreas Maier},
+      year={2026},
+      eprint={2609.20650},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2609.20650}, 
+}
+```
+
