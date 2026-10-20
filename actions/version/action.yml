@@ -1,0 +1,51 @@
+name: FL-Net version
+description: >
+  Reads the version of the calling repository and checks it against the FL-Net release rules.
+  Without check-branch: decides what a push to main/develop publishes (image tag, git tag, GitHub release).
+  With check-branch: only checks whether the version may go into that branch (pull request check).
+
+# Hi! This is the shared half of the FL-Net versioning.
+# Each repository keeps a tiny .github/scripts/version.sh that only knows where its version lives
+# (pom.xml, package.json or VERSION). Everything else (format, branch rules, release decision) is in
+# rules.sh next to this file, so a rule change happens once here instead of in every repository.
+# See "Release workflow" in the contribution guide of the Documentation.
+
+inputs:
+  check-branch:
+    description: Target branch to check the version for, e.g. github.base_ref of a pull request
+    required: false
+    default: ""
+  token:
+    description: Token to look up existing release tags
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  version:
+    description: Version of the repository
+    value: ${{ steps.rules.outputs.version }}
+  tag_image:
+    description: true if the images get the version as tag
+    value: ${{ steps.rules.outputs.tag_image }}
+  release:
+    description: true if this build creates the git tag and the GitHub release
+    value: ${{ steps.rules.outputs.release }}
+  prerelease:
+    description: true for release candidates
+    value: ${{ steps.rules.outputs.prerelease }}
+
+runs:
+  using: composite
+  steps:
+    - id: rules
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        CHECK_BRANCH: ${{ inputs.check-branch }}
+      run: |
+        version=$(bash .github/scripts/version.sh)
+        if [ -n "$CHECK_BRANCH" ]; then
+          bash "$GITHUB_ACTION_PATH/rules.sh" check "$version" "$CHECK_BRANCH"
+        else
+          bash "$GITHUB_ACTION_PATH/rules.sh" ci "$version"
+        fi
