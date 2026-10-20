@@ -1,0 +1,36 @@
+name: Image cleanup
+
+# Shared by the FL-Net repositories: each one calls this weekly for its own GHCR packages.
+# Removes the old <branch>-<sha> tags (staging-911500c, latest-911500c) that builds no longer create,
+# because the version tag replaced them, and then every image that has no tag left, i.e. old builds that
+# staging, latest or a .dev version moved away from. Releases (X.Y.Z) keep their tag and are never touched.
+on:
+  workflow_call:
+    inputs:
+      packages:
+        description: Comma-separated GHCR packages of the calling repository, e.g. orchestration-api/orch-api
+        required: true
+        type: string
+      dry-run:
+        description: Only log what would be deleted
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  packages: write
+
+jobs:
+  cleanup:
+    name: Clean up ${{ inputs.packages }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      # The calling repository needs the Admin role on each package (Package settings → Manage Actions access)
+      - uses: dataaxiom/ghcr-cleanup-action@v1.2.2
+        with:
+          packages: ${{ inputs.packages }}
+          delete-tags: staging-*,latest-*
+          delete-untagged: true
+          delete-partial-images: true
+          dry-run: ${{ inputs.dry-run }}
