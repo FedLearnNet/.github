@@ -2,8 +2,9 @@ name: Image cleanup
 
 # Shared by the FL-Net repositories: each one calls this weekly for its own GHCR packages.
 # Removes the old <branch>-<sha> tags (staging-911500c, latest-911500c) that builds no longer create,
-# because the version tag replaced them, and then every image that has no tag left, i.e. old builds that
-# staging, latest or a .dev version moved away from. Releases (X.Y.Z) keep their tag and are never touched.
+# because the version tag replaced them, and the feature-<name> tags of feature/<name> branches that no
+# longer exist. Then every image that has no tag left, i.e. old builds that staging, latest, a .dev version
+# or a feature tag moved away from, together with their platform images. Releases (X.Y.Z) are never touched.
 on:
   workflow_call:
     inputs:
@@ -26,11 +27,23 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
+      # feature-<name> tags of the still existing feature/<name> branches, kept below. The calling
+      # repositories are public, so no token is needed; a failed listing stops the job.
+      - name: List feature branches
+        id: branches
+        shell: bash
+        run: |
+          tags=$(git ls-remote --heads "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
+            | sed -n 's#^[0-9a-f]*\trefs/heads/\(feature/.*\)$#\1#p' | tr / - | paste -sd, -)
+          echo "Keeping: ${tags:-none}"
+          echo "tags=$tags" >> "$GITHUB_OUTPUT"
+
       # The calling repository needs the Admin role on each package (Package settings → Manage Actions access)
       - uses: dataaxiom/ghcr-cleanup-action@v1.2.2
         with:
           packages: ${{ inputs.packages }}
-          delete-tags: staging-*,latest-*
+          delete-tags: staging-*,latest-*,feature-*
+          exclude-tags: ${{ steps.branches.outputs.tags }}
           delete-untagged: true
           delete-partial-images: true
           dry-run: ${{ inputs.dry-run }}
